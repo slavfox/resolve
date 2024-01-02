@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+  <meta charset="utf-8" /><title>Resolve</title>
+  <script>
+    const corsAnywhere = "https://cors-anywhere.herokuapp.com/",
+      version =
+        "https://www.blackmagicdesign.com/api/support/latest-stable-version/davinci-resolve/",
+      register = "https://www.blackmagicdesign.com/api/register/us/download/",
+      reqjson = {
+        firstname: "John",
+        lastname: "Doe",
+        email: "john@example.com",
+        phone: "555-555-5555",
+        country: "US",
+        street: "123 Main St",
+        state: "CA",
+        city: "Los Angeles",
+        product: "DaVinci Resolve",
+      };
+    fetch(corsAnywhere + version)
+      .then((e) => e.json())
+      .then((e) => {
+        let t = {
+          mac: register + e.mac.downloadId,
+          windows: register + e.windows.downloadId,
+          linux: register + e.linux.downloadId,
+        };
+        for (let [e, n] of Object.entries(t))
+          fetch(corsAnywhere + n, {
+            mode: "cors",
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(reqjson),
+          })
+            .then((e) => e.text())
+            .then((t) => {
+              (document.getElementById(e).href = t),
+                (document.getElementById(e).innerHTML = t);
+            });
+      });
+  </script>
+  <h1>DaVinci Resolve direct download links</h1>
+  <p>Grab Resolve without having to fill out a privacy nightmare form.</p>
+  <dl>
+    <dt>Windows</dt>
+    <dd><a href="" id="windows">Loading...</a></dd>
+    <dt>Linux</dt>
+    <dd><a href="" id="linux">Loading...</a></dd>
+    <dt>Mac</dt>
+    <dd><a href="" id="mac">Loading...</a></dd>
+  </dl>
+</html>
