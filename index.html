@@ -2,7 +2,7 @@
 <html lang="en">
   <meta charset="utf-8" /><title>Resolve</title>
   <script>
-    const corsAnywhere = "https://cors-anywhere.herokuapp.com/",
+    const corsAnywhere = "https://corsproxy.io/?",
       version =
         "https://www.blackmagicdesign.com/api/support/latest-stable-version/davinci-resolve/",
       register = "https://www.blackmagicdesign.com/api/register/us/download/",
@@ -17,7 +17,7 @@
         city: "Los Angeles",
         product: "DaVinci Resolve",
       };
-    fetch(corsAnywhere + version)
+    fetch(corsAnywhere + encodeURIComponent(version))
       .then((e) => e.json())
       .then((e) => {
         let t = {
@@ -26,7 +26,7 @@
           linux: register + e.linux.downloadId,
         };
         for (let [e, n] of Object.entries(t))
-          fetch(corsAnywhere + n, {
+          fetch(corsAnywhere + encodeURIComponent(n), {
             mode: "cors",
             method: "POST",
             headers: { "Content-Type": "application/json" },
